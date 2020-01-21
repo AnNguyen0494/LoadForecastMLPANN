@@ -56,6 +56,12 @@ class MLP():
         out_layer = tf.matmul(layer_2, self.weights['out']) + self.biases['out']
         out_layer = tf.nn.relu(out_layer) #gettting positive value; omit any other values
         return out_layer
+    
+    def predict(self,X_data):
+        with tf.Session() as sess:
+            sess.run(self.init)
+            value = sess.run([self.YPred],feed_dict={self.X: X_data,})
+            print(value)
 
     def train_save_and_log(self,X_data,Y_data,fold=5,save_directory=None,model_name=None):
         logger = open(save_directory + "/log.txt",'a')
@@ -116,3 +122,4 @@ class MLP():
             save_path = saver.save(sess,model_name)
             print("Model saved in {}".format(save_path))
             logger.close()
+            
