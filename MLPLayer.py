@@ -38,7 +38,7 @@ class MLP():
         weights = tf.trainable_variables()
         regularization_penalty = tf.contrib.layers.apply_regularization(l1_regularizer, weights)
         self.YPred = self.__multilayer_perceptron(self.X) #Xem dòng 41 trở đi
-        self.loss_op = tf.losses.absolute_difference(self.Y,self.YPred) + regularization_penalty #Thêm hàm error, trong trường hợp này là absolute difference
+        self.loss_op = tf.losses.mean_squared_error(self.Y,self.YPred) + regularization_penalty #Thêm hàm error, trong trường hợp này là absolute difference
         self.optimizer = tf.contrib.opt.NadamOptimizer(learning_rate=self.learning_rate) #Hàm thay đổi trọng số Adam Optimizer (cải tiến của Stochastic GD). 
         self.train_op = self.optimizer.minimize(self.loss_op) #Phương pháp train: Giảm thiểu error
 
