@@ -18,6 +18,7 @@ class MLP():
         #Khởi tạo layer input và "layer output chứa kết quả thật"
         self.X = tf.placeholder("float", [None,n_inputs])
         self.Y = tf.placeholder("float", [None,n_outputs])
+        self.keep_prob = keep_prob
 
         #weight and bias cho các node trong MLP
         self.weights = {
@@ -50,7 +51,7 @@ class MLP():
         layer_1 = tf.add(tf.nn.relu(layer_1),tf.sin(layer_1)) #sin function is similar to any kind of wave functions
         layer_2 = tf.add(tf.matmul(layer_1, self.weights['h2']), self.biases['b2'])
         layer_2 = tf.sin(layer_2) #sin function is similar to any kind of wave functions -> is it possible to use cost function?
-        layer_2 = tf.nn.dropout(layer_2, keep_prob)
+        layer_2 = tf.nn.dropout(layer_2, self.keep_prob)
         # Output fully connected layer with a neuron for each class
         out_layer = tf.matmul(layer_2, self.weights['out']) + self.biases['out']
         out_layer = tf.nn.relu(out_layer) #gettting positive value; omit any other values
